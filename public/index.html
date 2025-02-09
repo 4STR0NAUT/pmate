@@ -8,15 +8,25 @@
 </head>
 <body>
   <div id="chat-container">
+    <!-- Chat-header med logo -->
+    <div id="chat-header">
+      <img src="/Images/logo.png" alt="Pipemate Logo" id="chat-logo">
+    </div>
     <div id="chat-window"></div>
+    <!-- Input-område med mikrofon-knapp, textarea og send-knapp -->
     <div id="input-area">
-      <input type="text" id="user-input" placeholder="Skriv ditt spørsmål om rørleggertema her...">
-      <button id="send-btn">Send</button>
+      <div class="input-wrapper">
+        <button id="mic-btn">
+          <img src="/Images/mic.png" alt="Mikrofon" class="icon">
+        </button>
+        <textarea id="user-input" placeholder="Skriv ditt spørsmål om rørleggertema her..."></textarea>
+        <button id="send-btn">
+          <img src="/Images/up.png" alt="Send" class="send-icon">
+        </button>
+      </div>
     </div>
     <div id="typing-indicator" style="display:none;">Pipemate skriver…</div>
-    <button id="checkout-button">Abonner nå</button>
   </div>
-  <script src="https://js.stripe.com/v3/"></script>
   <script src="app.js"></script>
 </body>
 </html>
