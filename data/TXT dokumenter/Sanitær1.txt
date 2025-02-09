@@ -1,0 +1,26 @@
+Spørsmål: Hva handler et innvendig sanitæranlegg om?
+Svar: Det handler om hvordan vann- og avløpsledninger er lagt innenfor husets fire vegger, inkludert alt utstyr som bad, toalett, dusj, servant og kjøkkenbenk.
+
+Spørsmål: Hva er bunnledninger?
+Svar: Bunnledninger er en fellesbetegnelse på vann- og avløpsrør som ligger under gulvet innenfor grunnmuren i en bolig. De omfatter både spillvannsledning (avløpsrør) og vannledning.
+
+Spørsmål: Hva er minste dimensjon på en bunnledning (spillvannsledning) i en enebolig?
+Svar: Ifølge Tekniske bestemmelser er minste dimensjon 110 mm, men du kan bruke 75 mm rør dersom det kun skal betjene ett enkelt utstyr og ikke overstiger verdiene i tabellene for dimensjonering.
+
+Spørsmål: Hvilket fall skal avløpsrøret (bunnledningen) minimum ha?
+Svar: Avløpsrøret skal minimum ha et fall på 1:60, det vil si 1 cm fall per 60 cm rør.
+
+Spørsmål: Hvilke materialer brukes ofte til avløpsrør i en bolig?
+Svar: Innendørs brukes det vanligvis PP-rør (plast) eller MA-rør (støpejern). PP-rør er lettere og billigere, mens MA-rør bråker mindre og tåler temperatursvingninger og brann bedre.
+
+Spørsmål: Hva er den vanlige dimensjonen på vannledningen i en enebolig?
+Svar: Vanligvis er denne 32 mm fra tilkoblingspunktet på offentlig vannforsyning og helt inn i boligen.
+
+Spørsmål: Hva menes med rør-i-rør-system for vannrør?
+Svar: Rør-i-rør vil si at vannrøret ligger inni et varerør. Dette gjør at eventuelle lekkasjer ledes ut til et synlig punkt (for eksempel et sluk), og at røret kan byttes uten å rive vegger eller tak.
+
+Spørsmål: Hvilke materialer brukes ofte til vannrør som monteres synlig?
+Svar: Kobberrør er vanlig når vannrørene ligger utenpå veggen. Ved skjult montering inni veggen brukes ofte rør-i-rør-systemer.
+
+Spørsmål: Hva er en vannskadesikker installasjon?
+Svar: Det er en rørinstallasjon der lekkasjer oppdages raskt og ikke forårsaker skade på bygningskonstruksjonen. Rør-i-rør-systemer og riktig plasserte avløp er eksempler på løsninger som bidrar til dette.
