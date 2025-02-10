@@ -153,6 +153,10 @@ html, body {
   
 /* Mobilvisning: sørg for at hele chat-containeren fyller hele skjermen uten unødvendig scroll */
 @media only screen and (max-width: 600px) {
+    #input-area {
+      margin-bottom: 20px;
+    }
+  
     html, body {
       height: 100%;
       margin: 0;
