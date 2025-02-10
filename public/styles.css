@@ -3,11 +3,11 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: #f5f5f5; /* Ensartet bakgrunnsfarge */
   }
   
   body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
     display: flex;
     flex-direction: column;
   }
@@ -25,14 +25,36 @@ html, body {
     overflow: hidden;
   }
   
-  /* Chat-header med logo */
+  /* Chat-header med logo og ny chat-knapp */
   #chat-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: none;
   }
+  
   #chat-logo {
+    display: block;
+    margin: 0 auto;
     max-height: 60px;
+    object-fit: contain;
+  }
+  
+  /* Ny chat-knappen plasseres absolutt i øvre høyre hjørne med like avstander */
+  #newchat-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .newchat-icon {
+    width: 24px;
+    height: 24px;
     object-fit: contain;
   }
   
@@ -86,7 +108,7 @@ html, body {
     align-items: center;
   }
   
-  /* Mikrofon-knappen plassert til venstre */
+  /* Mikrofon-knappen */
   #mic-btn {
     border: none;
     background: none;
@@ -120,7 +142,7 @@ html, body {
     min-height: 40px;
   }
   
-  /* Send-knappen: Fjern sirkelen, fjern bakgrunn og vis kun bildet */
+  /* Send-knappen: Fjern bakgrunn og border, vis kun bildet */
   #send-btn {
     position: absolute;
     right: 10px;
@@ -131,18 +153,10 @@ html, body {
     cursor: pointer;
     padding: 0;
   }
-  
-  /* Endret send-ikon størrelse */
   .send-icon {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     object-fit: contain;
-  }
-  
-  /* Hover-effekter */
-  #mic-btn:hover,
-  #send-btn:hover {
-    opacity: 0.8;
   }
   
   #typing-indicator {
@@ -151,35 +165,14 @@ html, body {
     padding: 5px 10px;
   }
   
-/* Mobilvisning: sørg for at hele chat-containeren fyller hele skjermen uten unødvendig scroll */
-@media only screen and (max-width: 600px) {
-    #input-area {
-      margin-bottom: 20px;
-    }
-  
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
+  /* Mobilvisning */
+  @media only screen and (max-width: 600px) {
+    body {
+      height: 100vh;
     }
     #chat-container {
-      height: 100vh;          /* Fyller hele viewport-høyden */
+      height: 100vh;
       margin: 0;
       border-radius: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    /* Header har fast høyde */
-    #chat-header {
-      flex: 0 0 auto;         /* Ikke la headeren vokse */
-    }
-    /* Chat-vinduet fyller den resterende plassen */
-    #chat-window {
-      flex: 1 1 auto;         /* Fyller all tilgjengelig plass */
-      overflow-y: auto;       /* Rull om nødvendig (men innholdet bør passe om det ikke er for mye melding) */
-    }
-    /* Input-området har fast høyde */
-    #input-area {
-      flex: 0 0 auto;         /* Fungerer som bunnfeste */
     }
   }

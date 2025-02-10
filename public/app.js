@@ -1,5 +1,8 @@
 // public/app.js
 
+// Global samtalehistorikk (kan senere knyttes til bruker-ID i en database)
+let conversationHistory = [];
+
 // Auto-resize for textarea: juster høyden etter innholdet
 const userInput = document.getElementById('user-input');
 userInput.addEventListener('input', function() {
@@ -7,7 +10,7 @@ userInput.addEventListener('input', function() {
   this.style.height = (this.scrollHeight) + 'px';
 });
 
-// Funksjon for å skrive ut en melding med typing-effekt (for bot)
+// Funksjon for å skrive ut en melding med typing-effekt for bot
 function typeMessage(sender, message, callback) {
   const chatWindow = document.getElementById('chat-window');
   const messageDiv = document.createElement('div');
@@ -23,16 +26,14 @@ function typeMessage(sender, message, callback) {
       clearInterval(interval);
       if (callback) callback();
     }
-  }, 30); // 30 ms per bokstav – juster etter ønsket hastighet
+  }, 30);
 }
 
-// Funksjon for å legge til en melding i chatvinduet
+// Legg til melding i chatvinduet (bruker typing-effekt for bot, umiddelbar for bruker)
 function addMessage(sender, message) {
   if (sender === 'bot') {
-    // Bruk typing-effekt for bot-meldinger
     typeMessage(sender, message);
   } else {
-    // For bruker-meldinger, legg den til direkte
     const chatWindow = document.getElementById('chat-window');
     const messageDiv = document.createElement('div');
     messageDiv.className = sender;
@@ -42,7 +43,7 @@ function addMessage(sender, message) {
   }
 }
 
-// Send melding ved klikk på send-knappen
+// Send melding når send-knappen klikkes
 document.getElementById('send-btn').addEventListener('click', async () => {
   const inputField = document.getElementById('user-input');
   const query = inputField.value.trim();
@@ -52,7 +53,7 @@ document.getElementById('send-btn').addEventListener('click', async () => {
   inputField.value = '';
   inputField.style.height = 'auto';
   document.getElementById('typing-indicator').style.display = 'block';
-
+  
   try {
     const response = await fetch('/api/query', {
       method: 'POST',
@@ -61,13 +62,14 @@ document.getElementById('send-btn').addEventListener('click', async () => {
     });
     const data = await response.json();
     addMessage('bot', data.answer);
+    conversationHistory.push({ query, answer: data.answer });
   } catch (err) {
     addMessage('bot', "Beklager, noe gikk galt.");
   }
   document.getElementById('typing-indicator').style.display = 'none';
 });
 
-// Send melding ved "Enter" (uten Shift+Enter for ny linje)
+// Send melding ved å trykke Enter (uten Shift+Enter for ny linje)
 userInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter' && !event.shiftKey) {
     event.preventDefault();
@@ -91,7 +93,6 @@ document.getElementById('mic-btn').addEventListener('click', () => {
   
   recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
-    // Sett det transkriberte spørsmålet inn i textareaen og send det automatisk
     userInput.value = transcript;
     document.getElementById('send-btn').click();
   };
@@ -102,7 +103,15 @@ document.getElementById('mic-btn').addEventListener('click', () => {
   };
 });
 
-// Vis en initial melding når siden lastes
+// Ny chat-knappen: Tømmer chatvinduet og nullstiller samtalehistorikken
+document.getElementById('newchat-btn').addEventListener('click', () => {
+  const chatWindow = document.getElementById('chat-window');
+  chatWindow.innerHTML = '';
+  conversationHistory = [];
+  addMessage('bot', "Hei! Hvordan kan jeg hjelpe deg i dag?");
+});
+
+// Vis en initial melding ved oppstart
 window.addEventListener('load', () => {
   addMessage('bot', "Hei! Hva kan jeg røre for deg? 😊");
 });
