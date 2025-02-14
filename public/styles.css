@@ -94,7 +94,7 @@ html, body {
   
   /* Input-området */
   #input-area {
-    padding: 5px 10px;  /* Reduserer topp- og bunnpaddingen */
+    padding: 20px;  /* Reduserer topp- og bunnpaddingen */
     display: flex;
     flex-direction: column;
     align-items: center;
