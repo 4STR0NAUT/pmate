@@ -14,8 +14,11 @@
 </head>
 <body>
   <div id="chat-container">
-    <!-- Chat-header med sentrert logo og ny chat-knapp -->
+    <!-- Chat-header med bug-knapp, sentrert logo og ny chat-knapp -->
     <div id="chat-header">
+      <button id="bug-btn">
+        <img src="/Images/bug.png" alt="Rapporter Bug" class="bug-icon">
+      </button>
       <img src="/Images/logo.png" alt="Pipemate Logo" id="chat-logo">
       <button id="newchat-btn">
         <img src="/Images/nychat.png" alt="Ny Chat" class="newchat-icon">
@@ -34,7 +37,15 @@
         </button>
       </div>
     </div>
-    <div id="typing-indicator" style="display:none;">Pipemate skriver…</div>
+  </div>
+  <!-- Bug Report Modal forblir uendret -->
+  <div id="bug-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Rapporter en Bug</h2>
+      <textarea id="bug-text" placeholder="Beskriv buggen her..."></textarea>
+      <button id="bug-send-btn">Send</button>
+    </div>
   </div>
   <script src="app.js"></script>
 </body>
