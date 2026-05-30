@@ -26,7 +26,10 @@ Rules:
 - Business hours: {{business_hours}}. Location: {{business_address}}.
 Today's date is {{current_date}}.`;
 
-const BEGIN_MESSAGE = `Thanks for calling {{business_name}}, this is the front desk — how can I help you today?`;
+// Inbound greeting. Lightly identifies as a virtual assistant — good practice,
+// and required by AI-disclosure laws in some US states. Drop "virtual" if a
+// client prefers it to sound like a human front desk and you're not in such a state.
+const BEGIN_MESSAGE = `Thanks for calling {{business_name}} — you've reached our virtual front desk. How can I help you today?`;
 
 async function main() {
   console.log('Creating Retell LLM (prompt)…');

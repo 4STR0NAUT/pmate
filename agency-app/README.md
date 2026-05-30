@@ -20,6 +20,13 @@ npm start             # http://localhost:3000
 Open http://localhost:3000 — the dashboard populates with demo data.
 (For a zero-setup peek, open `demo-dashboard.html` directly in any browser.)
 
+## Telephony setup (inbound only)
+
+We run **inbound voice only** and **forward the client's existing number** to the
+Retell agent — no number porting, no carrier/SMS registration. See
+[`TELEPHONY-SETUP.md`](./TELEPHONY-SETUP.md) for the per-client, do-it-in-order
+guide (overflow vs. full forwarding, verification, and the SMS/EIN note for later).
+
 ## Go live with Retell AI
 
 1. `cp .env.example .env` and fill in `RETELL_API_KEY` (from the Retell dashboard).
