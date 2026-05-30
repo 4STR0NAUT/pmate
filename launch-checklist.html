@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Receptionist Agency — Launch Checklist</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#2a3340;
+    --text:#e6edf3; --muted:#8b98a8; --accent:#3fb950; --accent2:#58a6ff;
+    --warn:#d29922; --danger:#f85149; --chip:#21304a;
+    --shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,#0b0f14,#0d1117 240px);color:var(--text);line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 120px}
+  header.hero{text-align:center;padding:28px 18px 8px}
+  .kicker{letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);font-size:.72rem;font-weight:700}
+  h1{font-size:2.1rem;margin:.3em 0 .15em;line-height:1.15}
+  .sub{color:var(--muted);max-width:640px;margin:0 auto;font-size:1.02rem}
+  .profile{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0 4px}
+  .chip{background:var(--chip);color:#cfe0ff;border:1px solid #2c3f60;border-radius:999px;padding:4px 12px;font-size:.78rem}
+
+  /* progress */
+  .progress-card{position:sticky;top:0;z-index:20;background:rgba(13,17,23,.92);backdrop-filter:blur(8px);
+    border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin:22px 0 8px;box-shadow:var(--shadow)}
+  .progress-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  .progress-top strong{font-size:1.05rem}
+  .bar{height:10px;background:#0a0e13;border-radius:999px;overflow:hidden;margin-top:10px;border:1px solid var(--border)}
+  .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .4s ease}
+  .pct{color:var(--accent);font-variant-numeric:tabular-nums}
+  .btn{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;
+    padding:6px 12px;font-size:.8rem;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--accent2);color:#fff}
+
+  /* phases */
+  .phase{background:var(--panel);border:1px solid var(--border);border-radius:16px;margin:18px 0;overflow:hidden;box-shadow:var(--shadow)}
+  .phase>summary{list-style:none;cursor:pointer;padding:18px 20px;display:flex;align-items:center;gap:14px;user-select:none}
+  .phase>summary::-webkit-details-marker{display:none}
+  .phase>summary:hover{background:var(--panel2)}
+  .ph-num{flex:0 0 auto;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+    background:linear-gradient(135deg,#1c2735,#243349);color:var(--accent2);font-size:.95rem;border:1px solid #2f4257}
+  .ph-meta{flex:1 1 auto}
+  .ph-title{font-size:1.12rem;font-weight:700}
+  .ph-when{color:var(--muted);font-size:.82rem}
+  .ph-count{font-size:.78rem;color:var(--muted);background:#0a0e13;border:1px solid var(--border);border-radius:999px;padding:3px 10px;white-space:nowrap}
+  .ph-body{padding:4px 20px 18px}
+  .arrow{transition:transform .2s;color:var(--muted)}
+  details[open] .arrow{transform:rotate(90deg)}
+
+  /* tasks */
+  ul.tasks{list-style:none;margin:0;padding:0}
+  ul.tasks li{display:flex;gap:12px;align-items:flex-start;padding:11px 10px;border-radius:10px;transition:.12s}
+  ul.tasks li:hover{background:var(--panel2)}
+  ul.tasks li + li{border-top:1px solid #1f2730}
+  .cb{appearance:none;flex:0 0 auto;width:21px;height:21px;border:2px solid #3a4756;border-radius:6px;margin-top:2px;cursor:pointer;position:relative;transition:.15s}
+  .cb:hover{border-color:var(--accent)}
+  .cb:checked{background:var(--accent);border-color:var(--accent)}
+  .cb:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #08130a;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+  .task-text{flex:1}
+  .task-text .t{font-weight:600}
+  .task-text .d{color:var(--muted);font-size:.88rem;margin-top:2px}
+  li.done .task-text .t{text-decoration:line-through;color:var(--muted)}
+  .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    border-radius:5px;padding:1px 7px;margin-left:8px;vertical-align:middle}
+  .tag.crit{background:#3a1f1f;color:#ff9b94;border:1px solid #5a2b2b}
+  .tag.cost{background:#1f3320;color:#9be6a4;border:1px solid #2c4a2e}
+  .tag.legal{background:#33301f;color:#e9d28a;border:1px solid #4a4529}
+  .note{background:var(--panel2);border-left:3px solid var(--accent2);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:.9rem;color:#c9d4e0}
+  .note.warn{border-left-color:var(--warn)}
+  .note.danger{border-left-color:var(--danger)}
+  .note b{color:#fff}
+
+  /* brand names */
+  .brands{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 22px 10px;margin:26px 0;box-shadow:var(--shadow)}
+  .brands h2{margin-top:0}
+  .brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:14px 0}
+  .brand{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;transition:.15s}
+  .brand:hover{border-color:var(--accent2);transform:translateY(-2px)}
+  .brand .nm{font-weight:800;font-size:1.05rem}
+  .brand .vibe{color:var(--muted);font-size:.82rem;margin-top:3px}
+  .brand .dom{color:var(--accent);font-size:.74rem;margin-top:7px;font-family:ui-monospace,Menlo,monospace}
+  .cat-label{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);font-weight:700;margin:18px 0 2px}
+
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px;padding-top:20px;border-top:1px solid var(--border)}
+  a{color:var(--accent2)}
+  .reality{background:linear-gradient(135deg,#2a1f10,#1c1608);border:1px solid #4a3a1e;border-radius:14px;padding:16px 20px;margin:18px 0}
+  .reality b{color:var(--warn)}
+  @media(max-width:520px){h1{font-size:1.6rem}.ph-when{display:block}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">Launch Playbook</div>
+    <h1>AI Receptionist Agency for Med Spas</h1>
+    <p class="sub">Your step-by-step checklist to a part-time, Norway-based agency selling AI phone-answering into the US. Progress saves automatically in this browser.</p>
+    <div class="profile">
+      <span class="chip">🇳🇴 Norwegian AS</span>
+      <span class="chip">🇺🇸 US med-spa clients</span>
+      <span class="chip">⏱️ ~15 hrs/week</span>
+      <span class="chip">✉️ Written outreach</span>
+      <span class="chip">💸 Bootstrap</span>
+    </div>
+  </header>
+
+  <div class="reality">
+    <b>⚠️ Reality anchor:</b> Realistic goal by month 4–5 is <b>$2–5k MRR with 1–4 retained clients</b> — not $10k. $10k/mo is a month 8–18 target part-time. The metric that actually gets you there is <b>retention</b>, not new logos. Chase clients who renew.
+  </div>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <strong>Overall progress</strong>
+      <span><span class="pct" id="pctText">0%</span> &nbsp;·&nbsp; <span id="countText" style="color:var(--muted)">0 / 0 done</span></span>
+    </div>
+    <div class="bar"><span id="barFill"></span></div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" onclick="expandAll(true)">Expand all</button>
+      <button class="btn" onclick="expandAll(false)">Collapse all</button>
+      <button class="btn" onclick="resetAll()">Reset progress</button>
+    </div>
+  </div>
+
+  <!-- PHASES rendered by JS -->
+  <div id="phases"></div>
+
+  <!-- BRAND NAMES -->
+  <section class="brands">
+    <h2>🏷️ Brand name ideas</h2>
+    <p style="color:var(--muted);margin-top:4px">Tuned for an <b>AI-receptionist / missed-call niche</b>. Before committing: check the <b>.com</b> is buyable, the name is free in <b>Brønnøysundregistrene</b> (Norwegian company register), and the US trademark class isn't taken. Avoid anything a med spa would find gimmicky.</p>
+
+    <div class="cat-label">Niche &amp; trust-forward (recommended — they signal what you do)</div>
+    <div class="brand-grid">
+      <div class="brand"><div class="nm">NeverMissed</div><div class="vibe">The whole value prop in one word — no missed calls.</div><div class="dom">nevermissed.ai / getnevermissed.com</div></div>
+      <div class="brand"><div class="nm">FrontDeskAI</div><div class="vibe">Instantly communicates "AI receptionist."</div><div class="dom">frontdesk.ai / tryfrontdesk.com</div></div>
+      <div class="brand"><div class="nm">RingCaught</div><div class="vibe">Playful — every ring gets caught.</div><div class="dom">ringcaught.com</div></div>
+      <div class="brand"><div class="nm">AlwaysAnswered</div><div class="vibe">Reassuring, premium, easy to say on a call.</div><div class="dom">alwaysanswered.ai</div></div>
+      <div class="brand"><div class="nm">Bookline</div><div class="vibe">Phone line that books appointments. Clean.</div><div class="dom">bookline.ai / getbookline.com</div></div>
+      <div class="brand"><div class="nm">Caught Calls</div><div class="vibe">Memorable, conversational, brandable.</div><div class="dom">caughtcalls.com</div></div>
+    </div>
+
+    <div class="cat-label">Med-spa / aesthetics flavored (lean all-in on the vertical)</div>
+    <div class="brand-grid">
+      <div class="brand"><div class="nm">GlowDesk</div><div class="vibe">"Glow" reads beauty/aesthetics; "desk" = front desk.</div><div class="dom">glowdesk.ai</div></div>
+      <div class="brand"><div class="nm">LuxeLine</div><div class="vibe">Premium feel that med spas aspire to.</div><div class="dom">luxeline.ai</div></div>
+      <div class="brand"><div class="nm">Aera Reception</div><div class="vibe">Soft, spa-like, elegant.</div><div class="dom">aera.ai / aerareception.com</div></div>
+      <div class="brand"><div class="nm">Belle Desk</div><div class="vibe">"Belle" = beauty; warm and feminine-coded.</div><div class="dom">belledesk.com</div></div>
+    </div>
+
+    <div class="cat-label">Clean &amp; abstract (room to expand beyond med spas later)</div>
+    <div class="brand-grid">
+      <div class="brand"><div class="nm">Nordreach</div><div class="vibe">Nordic origin + reach. Owns your Norway story.</div><div class="dom">nordreach.com</div></div>
+      <div class="brand"><div class="nm">Cadence AI</div><div class="vibe">Smooth conversation flow; pro and scalable.</div><div class="dom">cadence.ai (likely taken) / getcadence.ai</div></div>
+      <div class="brand"><div class="nm">Vox Front</div><div class="vibe">"Vox" = voice + front desk. Short, techy.</div><div class="dom">voxfront.com</div></div>
+      <div class="brand"><div class="nm">Replyk</div><div class="vibe">Invented, ownable, trademark-friendly.</div><div class="dom">replyk.com</div></div>
+    </div>
+
+    <div class="note"><b>My pick:</b> Lead with <b>NeverMissed</b> or <b>FrontDeskAI</b> — they sell the benefit before you've said a word, which matters enormously in cold outreach where you have ~2 seconds. Keep the company legal name (AS) separate and boring (e.g. "Nordreach AS"); use the brand as your trading name.</div>
+  </section>
+
+  <footer>
+    Built from your research-backed strategy doc · Progress stored locally in your browser only.<br>
+    Not legal/tax advice — confirm AS setup, W-8BEN-E and withholding with a Norwegian regnskapsfører.
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  {
+    n:"0", title:"Foundation — build the machine", when:"Weeks 1–4",
+    tasks:[
+      {t:"Start cold-email warmup TODAY", d:"Buy 2–3 domains (~NOK 120/yr ea), create 4–6 mailboxes (Google Workspace/MS365 ~$7 ea), set up SPF + DKIM + DMARC, start warmup in Instantly/Smartlead. This 4–6 week clock is your critical path — nothing else unblocks sending.", tag:"crit"},
+      {t:"Lock the niche: med spas", d:"Commit. 'AI receptionist for med spas' competes with almost nobody; 'AI agency' competes with thousands."},
+      {t:"Pick & secure your brand name", d:"Choose from the list below. Check .com availability + Brønnøysund company-name search + buy the domain."},
+      {t:"Learn the voice platform", d:"Sign up for Synthflow or Retell (free/cheap tier). White-label/managed — you configure, you don't hand-build."},
+      {t:"Build ONE killer demo agent", d:"A med-spa receptionist that books appointments, answers FAQs, handles after-hours, captures leads. Make it callable. Record a Loom walkthrough.", tag:"crit"},
+      {t:"Scrape ~1,000 med-spa leads", d:"Apify Google Maps scraper (~$5/1,000) across 2–3 US metros. Verify emails. Find owner/manager names + LinkedIn via Apollo."},
+      {t:"Write your offer + ROI one-pager", d:"Pain → demo → missed-call dollar math → pilot offer. One page."},
+      {t:"Stand up a one-page site + Calendly", d:"Brand, the demo agent's number, a booking link. That's enough to start."},
+      {t:"Draft the cold email sequence", d:"3–4 touches. Lead with the live demo + a business-specific missed-call number."}
+    ]
+  },
+  {
+    n:"1", title:"First outreach", when:"Weeks 5–8 · Month 1",
+    tasks:[
+      {t:"Begin light sending as mailboxes warm", d:"Ramp toward ~300–500/day total across mailboxes. Keep spam complaints <0.3%; include one-click unsubscribe + a real postal address (CAN-SPAM)."},
+      {t:"Run LinkedIn daily", d:"15–20 personalized connection requests/day (spread out), DM the accepts. This is your quality channel."},
+      {t:"Lead every pitch with the live demo", d:"'Call this number — it's an AI receptionist I built for med spas.' Attach a missed-call dollar figure specific to them."},
+      {t:"Offer a free 7–14 day pilot (or steep first-month discount)", d:"Your fastest path to the case studies a no-name needs. Use it deliberately on 1–2 good-fit spas."},
+      {t:"Book your first discovery calls", d:"Goal: pilots started by end of month 1."}
+    ]
+  },
+  {
+    n:"2", title:"Convert + go legit", when:"Weeks 9–12 · Month 2",
+    tasks:[
+      {t:"Outreach at full volume", d:"~600–1,000 emails/week + LinkedIn. Protect this time block no matter what — delivery must not eat all your hours."},
+      {t:"Convert pilots → paid", d:"Deliver hard. Collect a results-based testimonial: calls answered, bookings captured, $ recovered."},
+      {t:"Form the AS (before first live client)", d:"NOK 30 000 share capital (stays in company) + ~NOK 5 700 registration. Shields personal assets when your AI talks to a client's customers. ENK→AS conversion is fine if 30k is a stretch now.", tag:"legal"},
+      {t:"Get professional liability insurance", d:"Ansvarsforsikring incl. cyber/data, before going live. Some clients require it.", tag:"legal"},
+      {t:"Use a proper contract", d:"Liability cap (trailing-12-mo fees), exclude consequential damages, mutual indemnification, AI disclaimer, data terms — and framed as SERVICES not licensing.", tag:"legal"},
+      {t:"Collect W-8BEN-E for each US client", d:"So they don't withhold US tax. Keep contracts as services to avoid 30% royalty withholding.", tag:"legal"},
+      {t:"Confirm setup with a regnskapsfører", d:"Audit thresholds + royalty-vs-services line. 30 minutes that prevents compounding mistakes.", tag:"legal"}
+    ]
+  },
+  {
+    n:"3", title:"Leverage proof", when:"Weeks 13–16 · Month 3",
+    tasks:[
+      {t:"Put your case study in ALL outreach", d:"Real results lift reply + close rates more than any subject-line tweak."},
+      {t:"Raise prices for new clients", d:"You have proof now. $750 → $1,000+/mo retainers + setup fee."},
+      {t:"Introduce the GEO/visibility upsell", d:"Get clients found in ChatGPT/Google AI answers. +$500–1,500/mo, async, low maintenance — to existing clients first."},
+      {t:"Hit ~3–4 clients (~$2.5–4k MRR)", d:"Plus setup cash. This is on-track, not behind."}
+    ]
+  },
+  {
+    n:"4", title:"Optimize & stack", when:"Months 4–5",
+    tasks:[
+      {t:"Cut what isn't converting", d:"Double down on the best message + sub-niche. Kill the rest."},
+      {t:"Stack offers to raise ACV toward $1,500", d:"Receptionist + GEO on the same buyers → $10k at ~7 clients instead of 13."},
+      {t:"Build an onboarding SOP", d:"Make each new client take less of your limited time. Templatize everything."},
+      {t:"Target: $3–5k MRR / 4–6 clients (stretch $6–8k)", d:"$10k is month 8–18 — accelerates fast if results justify going full-time."}
+    ]
+  },
+  {
+    n:"R", title:"Every-month retention ritual", when:"Ongoing — the real game",
+    tasks:[
+      {t:"Send each client a monthly ROI report", d:"Calls answered, bookings captured, dollars recovered. This is what stops churn."},
+      {t:"Proactive check-in + fast fixes", d:"AI-service churn is brutal (~40% retention industry-wide). A renewal beats a new logo."},
+      {t:"Monitor call quality & latency", d:"Marketed 600ms becomes 800ms–2s in production and breaks the illusion. Watch it."},
+      {t:"Ask happy clients for referrals/upsells", d:"Cheapest growth you'll ever get; also your best green-flag signal."}
+    ]
+  }
+];
+
+const TAGLABEL={crit:"Critical path",legal:"Legal/Tax",cost:"Cost"};
+const KEY="aiagency-checklist-v1";
+let state=JSON.parse(localStorage.getItem(KEY)||"{}");
+
+const phasesEl=document.getElementById("phases");
+DATA.forEach((ph,pi)=>{
+  const det=document.createElement("details");
+  det.className="phase"; det.open = pi<2;
+  const total=ph.tasks.length;
+  det.innerHTML=`
+    <summary>
+      <span class="ph-num">${ph.n}</span>
+      <span class="ph-meta">
+        <div class="ph-title">${ph.title}</div>
+        <div class="ph-when">${ph.when}</div>
+      </span>
+      <span class="ph-count" id="cnt-${pi}">0 / ${total}</span>
+      <span class="arrow">▶</span>
+    </summary>
+    <div class="ph-body"><ul class="tasks">${
+      ph.tasks.map((tk,ti)=>{
+        const id=`t-${pi}-${ti}`;
+        const checked=state[id]?"checked":"";
+        const tag=tk.tag?`<span class="tag ${tk.tag}">${TAGLABEL[tk.tag]}</span>`:"";
+        return `<li class="${state[id]?'done':''}" id="li-${id}">
+          <input type="checkbox" class="cb" id="${id}" ${checked} onchange="toggle('${id}',${pi})">
+          <label class="task-text" for="${id}">
+            <div class="t">${tk.t}${tag}</div>
+            <div class="d">${tk.d}</div>
+          </label></li>`;
+      }).join("")
+    }</ul></div>`;
+  phasesEl.appendChild(det);
+});
+
+function toggle(id,pi){
+  const cb=document.getElementById(id);
+  state[id]=cb.checked;
+  document.getElementById("li-"+id).classList.toggle("done",cb.checked);
+  localStorage.setItem(KEY,JSON.stringify(state));
+  updateCounts();
+}
+function updateCounts(){
+  let done=0,total=0;
+  DATA.forEach((ph,pi)=>{
+    let pd=0;
+    ph.tasks.forEach((tk,ti)=>{ total++; if(state[`t-${pi}-${ti}`]){done++;pd++;} });
+    const c=document.getElementById("cnt-"+pi);
+    if(c){c.textContent=`${pd} / ${ph.tasks.length}`;
+      c.style.color = pd===ph.tasks.length && pd>0 ? "var(--accent)" : "var(--muted)";}
+  });
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById("barFill").style.width=pct+"%";
+  document.getElementById("pctText").textContent=pct+"%";
+  document.getElementById("countText").textContent=`${done} / ${total} done`;
+}
+function expandAll(open){document.querySelectorAll("details.phase").forEach(d=>d.open=open);}
+function resetAll(){
+  if(!confirm("Reset all progress? This clears every checkbox.")) return;
+  state={};localStorage.removeItem(KEY);
+  document.querySelectorAll(".cb").forEach(cb=>cb.checked=false);
+  document.querySelectorAll("li").forEach(li=>li.classList.remove("done"));
+  updateCounts();
+}
+updateCounts();
+</script>
+</body>
+</html>

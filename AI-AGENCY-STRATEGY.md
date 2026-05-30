@@ -128,14 +128,38 @@ Raising average contract value from $750 → $1,500 means you hit $10k with **~7
 
 ---
 
-## 5. BUSINESS STRUCTURE & LEGAL
+## 5. BUSINESS STRUCTURE & LEGAL (Norway-based, selling to the US)
 
-- **Start as sole prop while testing** (free), **but form a single-member LLC before your first live deployment.** DIY LLC in a cheap state ≈ $150–250 (skip the $700 "done-for-you" packages). Reason: when your AI talks to your *client's* customers and says something wrong, liability flows back to you via contract — an LLC shields personal assets (only if you keep a separate bank account and don't commingle).
+You're operating from **Norway**, so the structure choice is **enkeltpersonforetak (ENK) vs. aksjeselskap (AS)** — not a US LLC. You do **not** need a US entity to invoice US clients.
+
+### ENK vs. AS
+
+| | ENK | AS |
+|---|---|---|
+| Startup cost | ~free | **NOK 30 000 share capital** (your money, stays in the company) + ~NOK 5 700 registration |
+| Liability | **Personal** — house/savings exposed | **Limited** — personal assets shielded |
+| Accounting | Simple | Full bookkeeping + annual accounts (årsregnskap) |
+| Audit (revisjon) | None | **Can opt out** while small (rev. < ~NOK 7M, balance < ~NOK 27M, < 10 employees) |
+| Tax | Profit taxed as **personal income** (high marginal + trygdeavgift) | **22% selskapsskatt**; then 37.84% on dividends when withdrawn |
+
+- **Recommendation:** The liability point is the deciding factor. When your AI receptionist talks to a *client's* customers and books wrong / says something false, that liability can flow back to you via contract. An ENK gives **zero** protection; an AS shields personal assets. **Start lean to test, but be in an AS before your first live client deployment.** Converting ENK→AS later is a common, legitimate path if the NOK 30k is a stretch now.
   - *Legal signal: Air Canada was held liable for its chatbot's wrong answer (Moffatt v. Air Canada, 2024) — "the bot is a separate entity" defense was rejected.*
-- **Tax:** A single-member LLC is taxed identically to a sole prop (Schedule C). The S-corp election that saves real money only matters above ~$50–80k net profit — not a month-1 concern.
-- **Contract essentials** (template, <$500): limitation-of-liability cap (cap at trailing-12-month fees), exclusion of indirect/consequential damages, mutual indemnification, an **AI-specific disclaimer** (outputs may be inaccurate; human verification required), and data-handling terms.
-- **Insurance:** Tech **E&O / professional liability** (~$60–100/mo). Budget can't cover this on day one — **add it once you have revenue, before your first live deployment.** Many SMB clients now require it.
+
+### Tax & the US side (commonly gotten wrong)
+
+- **US corporate income tax: generally none.** With no US "permanent establishment" (no office, no US-based employee/agent) and the work done from Norway, income is foreign-source and the **Norway–US tax treaty** protects you. File a **W-8BEN-E** for each US client so they don't withhold.
+  - ⚠️ **Frame contracts as SERVICES, not software licensing.** Licensing can be treated as US **royalties** → 30% withholding (treaty-reduced). Services stay clean.
+- **Norwegian tax:** AS pays **22%** on worldwide profit. Normal.
+- **MVA (VAT):** services sold to **US businesses are exports → outside Norwegian VAT (zero-rated).** Register for MVA at NOK 50 000 turnover, but you don't charge US clients Norwegian VAT.
+- **US state sales tax:** mostly a non-issue early (economic-nexus thresholds ~$100k/state or 200 transactions are far away). Revisit only if you scale heavily into one state.
+- **Getting paid:** Stripe, Wise, and a normal AS business account all handle USD invoicing fine.
+
+### Contracts & insurance
+
+- **Contract essentials:** limitation-of-liability cap (cap at trailing-12-month fees), exclusion of indirect/consequential damages, mutual indemnification, an **AI-specific disclaimer** (outputs may be inaccurate; human verification required), data-handling terms, and **services (not licensing)** framing.
+- **Insurance:** professional liability / ansvarsforsikring (incl. cyber/data). Add once you have revenue, **before your first live deployment.** Some clients require it.
 - **Niche vs broad:** Narrow. Always. (See §2.)
+- ⚠️ **Confirm with a Norwegian regnskapsfører** before your first US contract: exact audit thresholds and the royalty-vs-services withholding line. A small mistake here compounds.
 
 ---
 
@@ -188,10 +212,9 @@ Raising average contract value from $750 → $1,500 means you hit $10k with **~7
 | Cold email tool (Instantly/Smartlead) | ~$37–47/mo |
 | Leads (Apify + Apollo) | ~$50–80/mo |
 | Voice platform (free/cheap tier for demo; upgrade when you have a paying client and pass cost through) | $0 → ~$97+/mo later |
-| LLC formation | ~$150–250 one-time |
 | **Running monthly (pre-client)** | **~$120–170/mo** |
 
-Keep the voice platform minimal until a client is paying. E&O insurance (~$60–100/mo) gets added from first revenue, before going live.
+**One-time entity cost (Norway):** ENK ~free to start; **AS = NOK 30 000 share capital** (retained in the company, not spent) + ~NOK 5 700 registration. Plan the AS conversion around your first paying client, not day one. Professional liability insurance gets added from first revenue, before going live.
 
 ---
 
