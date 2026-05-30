@@ -1,0 +1,19 @@
+{
+  "name": "agency-app",
+  "version": "0.1.0",
+  "description": "AI receptionist client ROI dashboard + Retell integration (med-spa niche)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed-mock.js",
+    "create-agent": "node scripts/create-medspa-agent.js",
+    "test-call": "node scripts/test-call.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

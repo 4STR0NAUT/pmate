@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Receptionist — Results Dashboard</title>
+<style>
+  :root{
+    --bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--border:#2a3340;
+    --text:#e6edf3;--muted:#8b98a8;--accent:#3fb950;--accent2:#58a6ff;--gold:#d4a72c;
+    --shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,#0b0f14,#0d1117 220px);color:var(--text);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:24px 18px 80px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:1.3rem;
+    background:linear-gradient(135deg,#1f6feb,#3fb950)}
+  h1{font-size:1.25rem;margin:0}
+  .sub{color:var(--muted);font-size:.85rem;margin-top:1px}
+  .period{color:var(--muted);font-size:.82rem;text-align:right}
+  .live{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-size:.78rem;font-weight:600}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(63,185,80,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,185,80,.5)}70%{box-shadow:0 0 0 8px rgba(63,185,80,0)}100%{box-shadow:0 0 0 0 rgba(63,185,80,0)}}
+
+  .hero{background:linear-gradient(135deg,#11261a,#0e1a13);border:1px solid #1f4a2e;border-radius:18px;
+    padding:22px 24px;margin:18px 0;box-shadow:var(--shadow)}
+  .hero .label{color:#9be6a4;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;font-weight:700}
+  .hero .big{font-size:2.8rem;font-weight:800;margin:6px 0 2px;color:#fff;font-variant-numeric:tabular-nums}
+  .hero .note{color:var(--muted);font-size:.86rem}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .card .k{color:var(--muted);font-size:.8rem;display:flex;align-items:center;gap:7px}
+  .card .v{font-size:1.9rem;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums}
+  .card .x{color:var(--muted);font-size:.78rem;margin-top:2px}
+  .ic{font-size:1rem}
+
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:6px 4px;margin-top:20px;box-shadow:var(--shadow)}
+  .panel h2{font-size:1rem;margin:14px 18px 6px}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th,td{text-align:left;padding:11px 18px;border-top:1px solid #1f2730}
+  th{color:var(--muted);font-weight:600;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;border-top:none}
+  tr:hover td{background:var(--panel2)}
+  .pill{font-size:.7rem;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+  .pill.book{background:#13351c;color:#7ee48b;border:1px solid #245a30}
+  .pill.miss{background:#33301f;color:#e9d28a;border:1px solid #4a4529}
+  .pill.ah{background:#1d2b45;color:#9cc2ff;border:1px solid #2c4a6b}
+  .summary{color:var(--muted)}
+  .empty{padding:30px 18px;text-align:center;color:var(--muted)}
+  footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:34px}
+  .demoflag{background:#33301f;border:1px solid #4a4529;color:#e9d28a;border-radius:10px;padding:8px 14px;font-size:.82rem;margin:8px 0 0}
+  @media(max-width:560px){.hero .big{font-size:2.2rem}th:nth-child(2),td:nth-child(2){display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">📞</div>
+      <div>
+        <h1 id="clientName">Med Spa Receptionist</h1>
+        <div class="sub">AI receptionist results</div>
+      </div>
+    </div>
+    <div class="period">
+      <div class="live"><span class="dot"></span> Live</div>
+      <div id="period">Last 14 days</div>
+    </div>
+  </header>
+
+  <div id="demoflag" class="demoflag" style="display:none">📊 Showing seeded demo data — connect your Retell key to go live.</div>
+
+  <div class="hero">
+    <div class="label">💰 Estimated revenue recovered</div>
+    <div class="big" id="revenue">$0</div>
+    <div class="note" id="revenueNote">From appointments your AI booked that would otherwise have been missed.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="k"><span class="ic">📞</span> Calls handled</div><div class="v" id="handled">0</div><div class="x">answered 24/7, every time</div></div>
+    <div class="card"><div class="k"><span class="ic">🌙</span> After-hours saves</div><div class="v" id="afterHours">0</div><div class="x">calls outside business hours</div></div>
+    <div class="card"><div class="k"><span class="ic">📅</span> Appointments booked</div><div class="v" id="bookings">0</div><div class="x"><span id="bookingRate">0</span>% of calls converted</div></div>
+    <div class="card"><div class="k"><span class="ic">⏱️</span> Staff minutes saved</div><div class="v" id="minutes">0</div><div class="x">time off your front desk</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Recent calls</h2>
+    <div id="tableWrap">
+      <table>
+        <thead><tr><th>When</th><th>From</th><th>Outcome</th><th>Summary</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none">No calls yet. Once your agent is live and receiving calls, they'll appear here.</div>
+    </div>
+  </div>
+
+  <footer id="foot">Updated just now · refreshes automatically</footer>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const CLIENT = params.get('client') || 'demo-medspa';
+const fmt$ = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const fmtT = (ms) => new Date(ms).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+
+async function refresh(){
+  try{
+    const [m, c] = await Promise.all([
+      fetch(`/api/metrics?client=${encodeURIComponent(CLIENT)}`).then(r=>r.json()),
+      fetch(`/api/calls?client=${encodeURIComponent(CLIENT)}`).then(r=>r.json()),
+    ]);
+    const met = m.metrics, cl = m.client || {};
+    if(cl.name) document.getElementById('clientName').textContent = cl.name;
+    document.getElementById('revenue').textContent = fmt$(met.revenueRecovered);
+    document.getElementById('revenueNote').textContent =
+      `${met.bookings} appointments booked × ~${fmt$(met.avgJobValue)} avg value.`;
+    document.getElementById('handled').textContent = met.handled;
+    document.getElementById('afterHours').textContent = met.afterHours;
+    document.getElementById('bookings').textContent = met.bookings;
+    document.getElementById('bookingRate').textContent = met.bookingRate;
+    document.getElementById('minutes').textContent = met.minutesHandled;
+    if(CLIENT==='demo-medspa') document.getElementById('demoflag').style.display='block';
+
+    const rows = c.calls || [];
+    const tb = document.getElementById('rows');
+    document.getElementById('empty').style.display = rows.length ? 'none' : 'block';
+    tb.innerHTML = rows.map(r=>{
+      const outcome = r.booked
+        ? `<span class="pill book">Booked</span>`
+        : `<span class="pill miss">Captured</span>`;
+      const ah = r.afterHours ? ` <span class="pill ah">After-hours</span>` : '';
+      return `<tr><td>${fmtT(r.when)}</td><td>${r.from}</td><td>${outcome}${ah}</td><td class="summary">${r.summary||''}</td></tr>`;
+    }).join('');
+    document.getElementById('foot').textContent = 'Updated ' + new Date().toLocaleTimeString() + ' · refreshes automatically';
+  }catch(e){
+    document.getElementById('foot').textContent = 'Could not reach the server. Is it running?';
+  }
+}
+refresh();
+setInterval(refresh, 15000);
+</script>
+</body>
+</html>
